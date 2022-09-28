@@ -1,0 +1,34 @@
+---
+context: "context"
+source: "source"
+platform:
+  kafka:
+    rbac:
+      SystemAdmin:
+        - principal: "User:superUser"
+  schema_registry:
+    rbac:
+      SystemAdmin:
+        - principal: "User:superUser"
+  kafka_connect:
+    rbac:
+      SecurityAdmin:
+        - principal: "User:superUser"
+projects:
+  - name: "foo"
+    consumers:
+      - principal: "User:App0"
+      - principal: "User:App1"
+    rbac:
+      - DeveloperRead:
+          - principal: "User:schemaregistryUser"
+    topics:
+      - name: "foo1"
+        config:
+          replication.factor: "1"
+          num.partitions: "1"
+      - dataType: "avro"
+        name: "bar"
+        config:
+          replication.factor: "1"
+          num.partitions: "1"
