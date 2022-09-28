@@ -7,7 +7,7 @@ pipeline {
         disableConcurrentBuilds()
     }
     environment {
-        env = env.BRANCH_NAME
+        env = ${env.BRANCH_NAME}
         TopologyFiles = "topologies/${env}-descriptor.yaml"
         Brokers = "broker:10091"
         MDS_URL = "http://broker:8091"
