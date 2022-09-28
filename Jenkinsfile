@@ -8,7 +8,7 @@ pipeline {
         MDS_PASSWORD = "mds"
         KAFKA_CLUSER_ID = "6_bXN6WTQFaaMoIjWmh2UA"
         SCHEMA_REGISTRY_URL = "http://schema-registry:8081"
-        ALLOW_TOPIC_DELETE = "true"
+        ALLOW_TOPIC_DELETE = true
     }
     stages {
         stage('verify-replication-factor') {
