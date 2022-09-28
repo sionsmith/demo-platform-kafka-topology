@@ -1,6 +1,14 @@
+def confirmDeployment
+
 pipeline {
     agent any
+    options {
+        ansiColor('xterm')
+        timestamps()
+        disableConcurrentBuilds()
+    }
     environment {
+        env = "BLD"
         TopologyFiles = "topologies/descriptor.yaml"
         Brokers = "broker:10091"
         MDS_URL = "http://broker:8091"
@@ -19,6 +27,33 @@ pipeline {
         stage('verify-num-of-partitions') {
             steps {
                 sh 'checks/verify-num-of-partitions.sh ${TopologyFiles} 1'
+            }
+        }
+        stage('dry-run') {
+            steps {
+                sh './scripts/build-connection-file.sh > topology-builder.properties'
+                sh 'cat topology-builder.properties'
+                sh 'java -jar /app/julie-ops.jar --brokers ${Brokers} --clientConfig topology-builder.properties --topology ${TopologyFiles} --dryRun'
+            }
+        }
+        stage('Confirm Topology') {
+            when {
+                branch 'int'
+            }
+            steps {
+                timeout(time: 1, unit: 'MINUTES') {
+                    script {
+                        confirmDeployment = input(id: 'userInput', message: 'Apply changes?',
+                                parameters: [[$class     : 'ChoiceParameterDefinition', defaultValue: 'strDef',
+                                              description: 'describing choices', name: 'DeploymentChoice', choices: "yes\nno"]
+                                ])
+
+                        if (confirmDeployment == 'no') {
+                            currentBuild.result = 'ABORTED'
+                            error("Aborted by user")
+                        }
+                    }
+                }
             }
         }
         stage('run') {
