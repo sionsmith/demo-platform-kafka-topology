@@ -18,8 +18,8 @@ basic.auth.credentials.source=USER_INFO \n
 topology.builder.mds.schema.registry.cluster.id=schema-registry \n
 topology.builder.mds.kafka.connect.cluster.id=connect-cluster \n
 topology.builder.mds.ksqldb.cluster.id=ksql-cluster \n
-allow.delete.topics=$ALLOW_TOPIC_DELETE \n
-topology.topic.prefix.separator=-
+allow.delete.topics=true \n
+topology.topic.prefix.separator=- \n
 "
 
 echo -e $CONFIG_FILE
