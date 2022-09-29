@@ -4,7 +4,6 @@ def confirmDeployment
 pipeline {
     agent any
     options {
-        cleanWs()
         disableConcurrentBuilds()
     }
     environment {
@@ -29,14 +28,14 @@ pipeline {
                 sh 'checks/verify-num-of-partitions.sh ${TopologyFiles} 1'
             }
         }
-        stage('check out schemas') {
-            steps {
-                git branch: 'main',
-                        url: 'https://github.com/sionsmith/demo-platform-kafka-schemas.git'
-                sh 'ls -lat'
-            }
-
-        }
+//        stage('check out schemas') {
+//            steps {
+//                git branch: 'main',
+//                        url: 'https://github.com/sionsmith/demo-platform-kafka-schemas.git'
+//                sh 'ls -lat'
+//            }
+//
+//        }
         stage('dry-run') {
             steps {
                 sh './scripts/build-connection-file.sh > topology-builder.properties'
