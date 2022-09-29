@@ -20,9 +20,7 @@ pipeline {
     stages {
         stage('check out schemas') {
             steps {
-                git branch: 'main',
-                        url: 'https://github.com/sionsmith/demo-platform-kafka-schemas.git'
-                sh 'ls -lat'
+                sh 'git clone --branch main https://github.com/sionsmith/demo-platform-kafka-schemas.git '
             }
 
         }
