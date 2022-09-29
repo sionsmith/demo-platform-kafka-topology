@@ -36,7 +36,7 @@ pipeline {
         }
         stage('dry-run') {
             steps {
-                sh 'ls'
+                sh 'ls -lat'
                 sh './scripts/build-connection-file.sh > topology-builder.properties'
                 sh 'cat topology-builder.properties'
                 sh 'java -jar /app/julie-ops.jar --brokers ${Brokers} --clientConfig topology-builder.properties --topology ${TopologyFiles} --dryRun'
