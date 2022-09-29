@@ -23,12 +23,21 @@ projects:
       - DeveloperRead:
           - principal: "User:schemaregistryUser"
     topics:
-      - name: "foo1"
+      - name: "humans"
+        schemas:
+          value.schema.file: "/platform/human.avsc"
         config:
           replication.factor: "1"
           num.partitions: "1"
-      - dataType: "avro"
-        name: "bar"
+      - name: "payments"
+        schemas:
+          value.schema.file: "/platform/payment.avsc"
+        config:
+          replication.factor: "1"
+          num.partitions: "1"
+      - name: "accounts"
+        schemas:
+          value.schema.file: "/platform/account.avsc"
         config:
           replication.factor: "1"
           num.partitions: "1"
