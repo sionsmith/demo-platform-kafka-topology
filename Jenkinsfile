@@ -29,8 +29,10 @@ pipeline {
             }
         }
         stage('check out schemas') {
-            git branch: 'main',
-                    url: 'https://github.com/sionsmith/demo-platform-kafka-schemas.git'
+            steps {
+                git branch: 'main',
+                        url: 'https://github.com/sionsmith/demo-platform-kafka-schemas.git'
+            }
         }
         stage('dry-run') {
             steps {
