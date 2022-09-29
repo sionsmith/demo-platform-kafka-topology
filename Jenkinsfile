@@ -4,6 +4,7 @@ def confirmDeployment
 pipeline {
     agent any
     options {
+        cleanWs()
         disableConcurrentBuilds()
     }
     environment {
