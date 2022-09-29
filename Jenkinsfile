@@ -18,6 +18,14 @@ pipeline {
         ALLOW_TOPIC_DELETE = true
     }
     stages {
+        stage('check out schemas') {
+            steps {
+                git branch: 'main',
+                        url: 'https://github.com/sionsmith/demo-platform-kafka-schemas.git'
+                sh 'ls -lat'
+            }
+
+        }
         stage('verify-replication-factor') {
             steps {
                 sh 'checks/verify-replication-factor.sh ${TopologyFiles} 1'
@@ -28,14 +36,7 @@ pipeline {
                 sh 'checks/verify-num-of-partitions.sh ${TopologyFiles} 1'
             }
         }
-//        stage('check out schemas') {
-//            steps {
-//                git branch: 'main',
-//                        url: 'https://github.com/sionsmith/demo-platform-kafka-schemas.git'
-//                sh 'ls -lat'
-//            }
-//
-//        }
+
         stage('dry-run') {
             steps {
                 sh './scripts/build-connection-file.sh > topology-builder.properties'
